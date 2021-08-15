@@ -3,7 +3,9 @@
 #'
 #' The contents of the unit tests (lines following the \code{@tests} tags)
 #' are written verbatim to the appropriate directories (directory depends
-#' on whether \code{tinytest} or \code{testthat} is in use).
+#' on whether \code{tinytest} or \code{testthat} is in use).  If there is more
+#' than one function and corresponding unit tests in a file, the first unit tests
+#' will be in \code{filename.R}, the second in \code{filename-1.R} etc.
 #'
 #' @param x A \code{roclet} object.
 #'
@@ -54,9 +56,16 @@ roclet_output.roclet_tests <- function(x, results, base_path, ...) {
     # extract the original short filenames
     fn <- sub("\\[(.*\\.R):[0-9]+\\](.*)", "\\1", results[[framework]])
     fn <- basename(fn)
+    fn <- tools::file_path_sans_ext(fn)
+    fn <- make.unique(fn, "-") # needed in case there are multiple functions and UTs in one file
+    fn <- paste0(fn, ".R")
+
 
     # extract the test contents
-    tests <- sub("(\\[.*\\.R:[0-9]+\\])(.*)", "\\2", results[[framework]])
+    # next line is simply the tests
+    # tests <- sub("(\\[.*\\.R:[0-9]+\\])(.*)", "\\2", results[[framework]])
+    # next line gets the tests and the line number where the test begins in the file (thx to CB)
+    tests <- sub("\\[.*/([^/]+\\.R:[0-9]+)\\](.*)", "\n# test found in \\1 (file:line)\n\\2", results[[framework]])
 
     if (framework == "tinytest") {
 
@@ -68,7 +77,7 @@ roclet_output.roclet_tests <- function(x, results, base_path, ...) {
 
       # write out unit test files
       for (i in 1:length(fn)) {
-        out_file <- paste0("inst/tinytest/test_", fn[i])
+        out_file <- paste0("inst/tinytest/test-", fn[i])
         writeUT(tests[i], out_file)
       }
 
@@ -84,7 +93,7 @@ roclet_output.roclet_tests <- function(x, results, base_path, ...) {
 
       # write out unit test files
       for (i in 1:length(fn)) {
-        out_file <- paste0("tests/testthat/test_", fn[i])
+        out_file <- paste0("tests/testthat/test-", fn[i])
         writeUT(tests[i], out_file)
       }
 
