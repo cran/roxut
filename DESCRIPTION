@@ -1,8 +1,8 @@
 Package: roxut
 Type: Package
 Title: Document Unit Tests Roxygen-Style
-Version: 0.3.23
-Date: 2021-08-15
+Version: 0.4.0
+Date: 2021-08-22
 Authors@R: c(
       person("Bryan A.", "Hanson",
            role = c("aut", "cre"),
@@ -37,7 +37,7 @@ Depends: roxygen2 (>= 7.1)
 Suggests: tinytest, testthat
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2021-08-15 17:13:39 UTC; bryanhanson
+Packaged: 2021-08-22 18:39:50 UTC; bryanhanson
 Author: Bryan A. Hanson [aut, cre] (<https://orcid.org/0000-0003-3536-8246>),
   Claudia Beleites [ctb],
   Hadley Wickham [aut, cph] (roxygen2 code),
@@ -47,4 +47,4 @@ Author: Bryan A. Hanson [aut, cre] (<https://orcid.org/0000-0003-3536-8246>),
   RStudio [cph] (roxygen2 code)
 Maintainer: Bryan A. Hanson <hanson@depauw.edu>
 Repository: CRAN
-Date/Publication: 2021-08-15 17:50:02 UTC
+Date/Publication: 2021-08-22 19:20:02 UTC
